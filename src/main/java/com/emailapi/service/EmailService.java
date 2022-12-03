@@ -49,8 +49,27 @@ public class EmailService {
             m.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             //adding subject to message
             m.setSubject(subject);
-            m.setText(message);
+            //m.setText(message);
 
+
+            //or
+
+            /*start of attachment */
+            String path = "C:\\Users\\orien\\OneDrive\\Desktop\\bg.png";
+            MimeMultipart mimeMultipart = new MimeMultipart();
+            MimeBodyPart textMime = new MimeBodyPart();
+            MimeBodyPart fileMime = new MimeBodyPart();
+            try {
+                textMime.setText(message);
+                File file = new File(path);
+                fileMime.attachFile(file);
+                mimeMultipart.addBodyPart(textMime);
+                mimeMultipart.addBodyPart(fileMime);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            m.setContent(mimeMultipart);
+            /*end of attachment */
 
             //send
             //Step 3 : send the message using Transport class
