@@ -1,16 +1,15 @@
 package com.emailapi.controller;
 
 import com.emailapi.model.EmailRequest;
+import com.emailapi.model.EmailResponse;
 import com.emailapi.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class EmailController {
 
 
@@ -31,9 +30,9 @@ public class EmailController {
         Boolean aBoolean = this.emailService.sendEmail(request.getSubject(), request.getMessage(), request.getTo());
 
         if (aBoolean) {
-            return ResponseEntity.ok("Email is send successfully...");
+            return ResponseEntity.ok(new EmailResponse("Email is send successfully..."));
         }else{
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Email not sent...");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new EmailResponse("Email not sent..."));
         }
     }
 
